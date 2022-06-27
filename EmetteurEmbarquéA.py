@@ -106,7 +106,7 @@ def convert_to_mono(channels, nChannels, outputType):
     return samples.astype(outputType)
 
 tStart=0
-tEnd=20
+tEnd=21
 
 channels, nChannels, sampleRate, ampWidth, nFrames = extract_audio('sample_interstellar.wav', tStart, tEnd)
 samples = convert_to_mono(channels, nChannels, np.int16)
@@ -227,8 +227,7 @@ symbols_real = modulation.real
 symbols_imag = modulation.imag
 
 #Etape 2 : convolution
-Tsymbol = 0.0001875*8
-sampleRate = 44100
+Tsymbol = 0.0001875*85
 alpha = 1/2
 N = int(5*Tsymbol*sampleRate)
 # temps : array containing the time indices, in seconds, for the impulse response
@@ -245,9 +244,9 @@ son = np.real(convo*np.exp(2*np.pi*1j*Fcoupure*t))
 
 x = np.zeros(len(lp_samples_filtered)-len(son))
 son = np.append(son,x)
-tmpsound = lp_samples_filtered + son # tmpsound = son porteur + info
-scipy.io.wavfile.write("emetteur.wav",sampleRate,tmpsound.astype(np.int16))
-song = AudioSegment.from_wav("emetteur.wav")
+son_emetteur = lp_samples_filtered + son # tmpsound = son porteur + info
+scipy.io.wavfile.write("son_emetteur.wav",sampleRate,son_emetteur.astype(np.int16))
+song = AudioSegment.from_wav("son_emetteur.wav")
 print("Start")
 play(song)
 print("End")
